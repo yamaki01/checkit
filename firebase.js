@@ -1,10 +1,10 @@
 firebase.initializeApp({
-  apiKey: 'AIzaSyANamGza96l_HKbG-hsw73WvCFxNv_I_YY',
-  authDomain: 'dd5tools.firebaseapp.com',
-  databaseURL: 'https://dd5tools.firebaseio.com',
-  projectId: 'dd5tools',
-  storageBucket: 'dd5tools.appspot.com',
-  messagingSenderId: '1096592466642',
+  apiKey: "AIzaSyCCs8TGFbwaFhi5iirjdohRBALKvLwN-U0",
+  authDomain: "checkit-a2cfe.firebaseapp.com",
+  databaseURL: "https://checkit-a2cfe.firebaseio.com",
+  projectId: "checkit-a2cfe",
+  storageBucket: "checkit-a2cfe.appspot.com",
+  messagingSenderId: "121304597067",
 });
 
 const db = firebase.firestore();
@@ -16,11 +16,10 @@ class FirestoreListener {
         const id = change.doc.id;
         const data = change.doc.data();
         if (change.type === 'added') {
-          collection.add(id, data);
+          collection.push({ id, ...data });
         } else if (change.type === 'modified') {
-          collection.modify(id, data);
-        } else if (change.type === 'removed') {
-          collection.remove(id);
+          const member = collection.find((m) => m.id === id);
+          Object.assign(member, data);
         }
       });
     });

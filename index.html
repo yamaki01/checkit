@@ -6,7 +6,9 @@
   <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
   <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
-  <script src="lib.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.11.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.11.0/firebase-firestore.js"></script>
+  <script src="firebase.js"></script>
 </head>
 
 <body>
@@ -41,50 +43,19 @@
     var vm = new Vue({
       el: '#app',
       data: {
-        tasks: [{
-            id: 'ta',
-            name: '朝ご飯食べる',
-            index: 1,
-          },
-          {
-            id: 'tb',
-            name: '昼ご飯食べる',
-            index: 2,
-          },
-          {
-            id: 'tc',
-            name: '晩ご飯食べる',
-            index: 3,
-          },
-        ],
-        users: [{
-            id: 'ua',
-            name: '赤城　一郎',
-            progress: 0,
-          },
-          {
-            id: 'ub',
-            name: '青木　次郎',
-            progress: 1,
-          },
-          {
-            id: 'uc',
-            name: '緑川　三郎',
-            progress: 2,
-          },
-        ],
+        tasks: [],
+        users: [],
       },
-      computed: {},
       methods: {
         check(user, task, on) {
-          if (on) {
-            user.progress = task.index;
-          } else {
-            user.progress = Math.max(0, task.index - 1);
-          }
+          const progress = on ? task.index : Math.max(0, task.index - 1);
+          db.collection('users').doc(user.id).update({ progress });
         },
       },
-      created() {},
+      created() {
+        new FirestoreListener('users', this.users);
+        new FirestoreListener('tasks', this.tasks);
+      },
     });
   </script>
 </body>
