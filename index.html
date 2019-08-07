@@ -20,16 +20,16 @@
           <div class="list">
             <div class="list-item">
               <div class="columns">
-                <div class="column" v-for="user in users">{{user.name.substr(0,2)}}</div>
-                <div class="column is-9">やること</div>
+                <div class="column" v-for="user in users">{{ user.name.substr(0,2) }}</div>
+                <div class="column is-6">やること</div>
               </div>
             </div>
-            <div class="list-item" v-for="task in tasks">
+            <div class="list-item" v-for="task in tasksOrderByIndex">
               <div class="columns">
                 <div class="column" v-for="user in users">
                   <b-checkbox :value="user.progress >= task.index" @input="check(user, task, $event)"></b-checkbox>
                 </div>
-                <div class="column is-9">{{task.name}}</div>
+                <div class="column is-6">{{ task.name.substr(0, 58) }}</div>
               </div>
             </div>
           </div>
@@ -50,6 +50,11 @@
         check(user, task, on) {
           const progress = on ? task.index : Math.max(0, task.index - 1);
           db.collection('users').doc(user.id).update({ progress });
+        },
+      },
+      computed: {
+        tasksOrderByIndex() {
+          return this.tasks.sort((a, b) => a.index > b.index ? 1 : -1);
         },
       },
       created() {
