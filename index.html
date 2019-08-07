@@ -20,7 +20,7 @@
           <div class="list">
             <div class="list-item">
               <div class="columns">
-                <div class="column" v-for="user in users">{{ user.name.substr(0,2) }}</div>
+                <div class="column" v-for="user in usersOrderByIndex">{{ user.name.substr(0,2) }}</div>
                 <div class="column is-6">やること</div>
               </div>
             </div>
@@ -55,6 +55,9 @@
       computed: {
         tasksOrderByIndex() {
           return this.tasks.sort((a, b) => a.index > b.index ? 1 : -1);
+        },
+        usersOrderByIndex() {
+          return this.users.sort((a, b) => a.index > b.index ? 1 : -1);
         },
       },
       created() {
