@@ -1,0 +1,92 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+  <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+  <script src="lib.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <section class="section">
+      <div class="container">
+        <div class="box">
+          <h1 class="title">CheckIt!</h1>
+          <div class="list">
+            <div class="list-item">
+              <div class="columns">
+                <div class="column" v-for="user in users">{{user.name.substr(0,2)}}</div>
+                <div class="column is-9">やること</div>
+              </div>
+            </div>
+            <div class="list-item" v-for="task in tasks">
+              <div class="columns">
+                <div class="column" v-for="user in users">
+                  <b-checkbox :value="user.progress >= task.index" @input="check(user, task, $event)"></b-checkbox>
+                </div>
+                <div class="column is-9">{{task.name}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        tasks: [{
+            id: 'ta',
+            name: '朝ご飯食べる',
+            index: 1,
+          },
+          {
+            id: 'tb',
+            name: '昼ご飯食べる',
+            index: 2,
+          },
+          {
+            id: 'tc',
+            name: '晩ご飯食べる',
+            index: 3,
+          },
+        ],
+        users: [{
+            id: 'ua',
+            name: '赤城　一郎',
+            progress: 0,
+          },
+          {
+            id: 'ub',
+            name: '青木　次郎',
+            progress: 1,
+          },
+          {
+            id: 'uc',
+            name: '緑川　三郎',
+            progress: 2,
+          },
+        ],
+      },
+      computed: {},
+      methods: {
+        check(user, task, on) {
+          if (on) {
+            user.progress = task.index;
+          } else {
+            user.progress = Math.max(0, task.index - 1);
+          }
+        },
+      },
+      created() {},
+    });
+  </script>
+</body>
+
+</html>
