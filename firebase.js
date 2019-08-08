@@ -9,19 +9,17 @@ firebase.initializeApp({
 
 const db = firebase.firestore();
 
-class FirestoreListener {
-  constructor(name, collection) {
-    db.collection(name).onSnapshot((snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        const id = change.doc.id;
-        const data = change.doc.data();
-        if (change.type === 'added') {
-          collection.push({ id, ...data });
-        } else if (change.type === 'modified') {
-          const member = collection.find((m) => m.id === id);
-          Object.assign(member, data);
-        }
-      });
+function listen(name, collection) {
+  db.collection(name).onSnapshot((snapshot) => {
+    snapshot.docChanges().forEach((change) => {
+      const id = change.doc.id;
+      const data = change.doc.data();
+      if (change.type === 'added') {
+        collection.push({ id, ...data });
+      } else if (change.type === 'modified') {
+        const member = collection.find((m) => m.id === id);
+        Object.assign(member, data);
+      }
     });
-  }
+  });
 }

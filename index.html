@@ -48,7 +48,7 @@
       },
       methods: {
         check(user, task, on) {
-          const progress = on ? task.index : (task.index < 1 ? 0 : task.index - 1);
+          const progress = on ? task.index : (task.index > 1 ? task.index - 1 : 0);
           db.collection('users').doc(user.id).update({ progress });
         },
       },
@@ -61,8 +61,8 @@
         },
       },
       created() {
-        new FirestoreListener('users', this.users);
-        new FirestoreListener('tasks', this.tasks);
+        listen('users', this.users);
+        listen('tasks', this.tasks);
       },
     });
   </script>
