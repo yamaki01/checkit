@@ -48,16 +48,16 @@
       },
       methods: {
         check(user, task, on) {
-          const progress = on ? task.index : Math.max(0, task.index - 1);
+          const progress = on ? task.index : (task.index < 1 ? 0 : task.index - 1);
           db.collection('users').doc(user.id).update({ progress });
         },
       },
       computed: {
         tasksOrderByIndex() {
-          return this.tasks.sort((a, b) => a.index > b.index ? 1 : -1);
+          return this.tasks.sort((a, b) => a.index - b.index);
         },
         usersOrderByIndex() {
-          return this.users.sort((a, b) => a.index > b.index ? 1 : -1);
+          return this.users.sort((a, b) => a.index - b.index);
         },
       },
       created() {
