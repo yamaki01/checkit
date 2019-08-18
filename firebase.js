@@ -1,10 +1,21 @@
 firebase.initializeApp({
-  apiKey: "AIzaSyCCs8TGFbwaFhi5iirjdohRBALKvLwN-U0",
-  authDomain: "checkit-a2cfe.firebaseapp.com",
-  databaseURL: "https://checkit-a2cfe.firebaseio.com",
-  projectId: "checkit-a2cfe",
-  storageBucket: "checkit-a2cfe.appspot.com",
-  messagingSenderId: "121304597067",
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBw71iaoXCwc10E3R3Zc4KszEte96sgn6U",
+    authDomain: "test01-a296e.firebaseapp.com",
+    databaseURL: "https://test01-a296e.firebaseio.com",
+    projectId: "test01-a296e",
+    storageBucket: "test01-a296e.appspot.com",
+    messagingSenderId: "869682482726",
+    appId: "1:869682482726:web:09529a3b0ddfc429"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
 });
 
 const db = firebase.firestore();
